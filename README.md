@@ -1,5 +1,7 @@
 # Oritwig Core · 源枝
 
+> **Superseded development preview.** This repository is preserved for source history and is not part of the current upstream-first Oritwig product releases. See the [current catalog](https://github.com/athemeroy/app-matrix).
+
 Reusable, account-free Android capabilities extracted from mature open-source applications, with exact source provenance and focused tests. This is a library, not one of the standalone apps.
 
 The independent applications are [Oritwig Poster](https://github.com/athemeroy/oritwig-poster) and [Oritwig Journal](https://github.com/athemeroy/oritwig-journal). Each app carries a pinned copy of the complete shared source and builds without a sibling checkout, Telegram account, API key or runtime server.
