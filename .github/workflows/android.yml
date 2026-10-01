@@ -1,0 +1,35 @@
+name: Oritwig core
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  core:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Install verified JDK
+        run: |
+          ./tools/setup-jdk.sh "$RUNNER_TEMP/oritwig-jdk"
+          echo "JAVA_HOME=$RUNNER_TEMP/oritwig-jdk" >> "$GITHUB_ENV"
+          echo "$RUNNER_TEMP/oritwig-jdk/bin" >> "$GITHUB_PATH"
+      - name: Build, lint and run actual core tests
+        run: ./tools/package-core.sh
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: oritwig-core-${{ github.sha }}
+          path: artifacts/core/
+          if-no-files-found: error
+      - name: Upload check results
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: core-reports-${{ github.sha }}
+          path: shared/core/build/reports/
+          if-no-files-found: warn
